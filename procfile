@@ -1,2 +1,2 @@
-web: gunicorn genba.wsgi --log-file
-web: python manage.py migrate && gunicorn genba.wsg
+web: gunicorn genba_manager_app.wsgi --log-file
+web: python manage.py migrate && gunicorn genba_manager_app.wsg
