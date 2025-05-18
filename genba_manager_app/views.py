@@ -328,8 +328,12 @@ def delete_report(request, report_id):
 
 @login_required(login_url='/login_user/')
 def export_csv(request):
-    latest_time = DailyReport.objects.latest("-date_created")
-    if latest_time:
+    if request.user.is_authenticated:
+        try:
+            latest_time = DailyReport.objects.latest("-date_created")
+        except DailyReport.DoesNotExist:
+            latest_time = None # Or set it to a default value
+    if latest_time != None:
         date_time = now.date()
         str_time = date_time.strftime('%Y/%m/%d')
         f = "現場毎作業日報" + "_" + str_time + ".csv"
