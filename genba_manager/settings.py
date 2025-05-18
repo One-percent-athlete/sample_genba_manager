@@ -25,8 +25,8 @@ SECRET_KEY = 'django-insecure-vy_musgwu3s1%_audbc*akq*$=wy9^sh7)8vt*%zx=@g@0qdf^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['http://127.0.0.1:8000/', 'http://localhost:8000/', 'samplegenbamanager-production.up.railway.app', 'samplegenbamanager-production.up.railway.app/']
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000', 'http://localhost:8000', 'https://samplegenbamanager-production.up.railway.app', 'https://samplegenbamanager-production.up.railway.app/']
+ALLOWED_HOSTS = ['127.0.0.1', 'http://127.0.0.1', 'http://localhost:8000/', 'samplegenbamanager-production.up.railway.app', 'samplegenbamanager-production.up.railway.app/']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'http://localhost:8000', 'https://samplegenbamanager-production.up.railway.app', 'https://samplegenbamanager-production.up.railway.app/']
 
 
 # Application definition
