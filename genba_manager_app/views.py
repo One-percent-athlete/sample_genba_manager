@@ -183,7 +183,7 @@ def genba_list(request):
         today = datetime.date.today()
         current_month = today.month
 
-        start_month = (current_month - 2) % 12
+        start_month = (current_month - 1) % 12
         if start_month == 0:
             start_month = 12
 
