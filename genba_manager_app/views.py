@@ -185,7 +185,6 @@ def genba_list(request):
         today = datetime.date.today()
         current_month = today.month
 
-        # Let's say you want to select the previous three months (including the current month)
         start_month = (current_month - 2) % 12
         if start_month == 0:
             start_month = 12
@@ -194,7 +193,6 @@ def genba_list(request):
 
         old_genba_list = Genba.objects.filter(Q(date_created__month__gte=start_month) & Q(date_created__month__lte=end_month)).order_by('-date_created')
 
-        print(f"Filtering Genba objects from month {start_month} to {end_month}")
         if request.method == "POST":
             keyword = request.POST['keyword']
             result_list = Genba.objects.filter(name__contains=keyword).order_by('-date_created')
@@ -261,6 +259,18 @@ def report_list(request):
     if request.user.is_authenticated:
         reports_list = DailyReport.objects.all().order_by('-date_created')
         reports = []
+
+        today = datetime.date.today()
+        current_month = today.month
+
+        start_month = (current_month - 2) % 12
+        if start_month == 0:
+            start_month = 12
+
+        end_month = current_month
+
+        old_report_list = DailyReport.objects.filter(Q(date_created__month__gte=start_month) & Q(date_created__month__lte=end_month)).order_by('-date_created')
+
         if request.method == "POST":
             keyword = request.POST['keyword']
             result_list = DailyReport.objects.filter(date_created__contains=keyword).order_by('-date_created')
@@ -271,7 +281,7 @@ def report_list(request):
                     reports.append(report)
         else:
             reports = reports_list
-    return render(request, "report_list.html", { 'reports': reports, 'month': month })
+    return render(request, "report_list.html", { 'reports': reports, 'old_report_list': old_report_list, 'start_month': start_month, 'end_month': end_month })
 
 @login_required(login_url='/login_user/')
 def export_searched(request, keyword):
