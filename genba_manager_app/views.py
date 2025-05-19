@@ -5,9 +5,9 @@ from django.shortcuts import render, redirect
 from django.utils.safestring import mark_safe
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.db.models import Q
 import calendar
 import csv, urllib
-import os
 import datetime
 now = datetime.datetime.now()
 
@@ -177,10 +177,24 @@ def schedule(request):
         return redirect('login_user')
 
 @login_required(login_url='/login_user/')
-def genba_list(request):   
+def genba_list(request):
+    
     if request.user.is_authenticated:
         genba_list = Genba.objects.all().order_by('-date_created')
         genbas = []
+        today = datetime.date.today()
+        current_month = today.month
+
+        # Let's say you want to select the previous three months (including the current month)
+        start_month = (current_month - 2) % 12
+        if start_month == 0:
+            start_month = 12
+
+        end_month = current_month
+
+        old_genba_list = Genba.objects.filter(Q(date_created__month__gte=start_month) & Q(date_created__month__lte=end_month)).order_by('-date_created')
+
+        print(f"Filtering Genba objects from month {start_month} to {end_month}")
         if request.method == "POST":
             keyword = request.POST['keyword']
             result_list = Genba.objects.filter(name__contains=keyword).order_by('-date_created')
@@ -191,7 +205,7 @@ def genba_list(request):
                     genbas.append(genba)
         else:
             genbas = genba_list
-    return render(request, "genba_list.html", {"genbas": genbas})
+    return render(request, "genba_list.html", {"genbas": genbas, "old_genba_list": old_genba_list, "start_month": start_month, "end_month": end_month})
 
 @login_required(login_url='/login_user/')
 def profile_genba(request):   
@@ -257,7 +271,7 @@ def report_list(request):
                     reports.append(report)
         else:
             reports = reports_list
-    return render(request, "report_list.html", { 'reports': reports })
+    return render(request, "report_list.html", { 'reports': reports, 'month': month })
 
 @login_required(login_url='/login_user/')
 def export_searched(request, keyword):
