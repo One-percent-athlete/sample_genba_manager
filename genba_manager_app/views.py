@@ -14,8 +14,6 @@ now = datetime.datetime.now()
 from .models import Profile, Genba, Notification, DailyReport
 from .forms import SignUpForm, UserProfileForm, GenbaForm, DailyReportForm
 
-# 現場一覧をまとめる 日付を分けると大変
-
 @login_required(login_url='/login_user/')
 def home(request):
     if request.user.is_authenticated:
@@ -208,7 +206,7 @@ def genba_list(request):
 @login_required(login_url='/login_user/')
 def profile_genba(request):   
     if request.user.is_authenticated:
-        profiles = Profile.objects.all()
+        profiles = Profile.objects.all().order_by('-date_created')
         genbas = Genba.objects.all().order_by('-date_created')
     return render(request, "profile_genba.html", {"profiles": profiles, "genbas": genbas})
 
