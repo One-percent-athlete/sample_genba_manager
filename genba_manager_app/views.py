@@ -14,6 +14,7 @@ now = datetime.datetime.now()
 from .models import Profile, Genba, Notification, DailyReport
 from .forms import SignUpForm, UserProfileForm, GenbaForm, DailyReportForm
 
+
 @login_required(login_url='/login_user/')
 def home(request):
     if request.user.is_authenticated:
@@ -29,13 +30,26 @@ def home(request):
                     for genba in genbas:
                         if genba.head_person != request.user.profile or request.user.profile not in genba.attendees.all():
                             genbas.remove(genba)
+        year = int(now.year)
+        month = int(now.month)
+        cal = calendar.HTMLCalendar().formatmonth(year, month)
+        cal = cal.replace('<td ', '<td width="150" height="150" hover')
+        cal = mark_safe(cal)
         if request.method == "POST":
             content = request.POST.get("content")
             author = User.objects.get(id=request.user.id)
             notification = Notification.objects.create(content=content, author=author)
             notification.save()
         notifications = Notification.objects.all().order_by('-date_created')
-        return render(request, "home.html", {"genba_list":genba_list, "genbas": genbas, "notifications": notifications})
+        context = {
+            "genba_list": genba_list,
+            "genbas":genbas,
+            "year": year,
+            "month": month,
+            "cal": cal,
+            "notifications": notifications
+        }
+        return render(request, "home.html", context=context)
     else:
         messages.success(request, "ログインしてください。")
         return redirect("login_user")
@@ -139,38 +153,6 @@ def profile_list(request):
             keyword = request.POST['keyword']
             result_list = Profile.objects.filter(fullname__contains=keyword).order_by('-date_created')
         return render(request, "profile_list.html", { "profiles": profiles, "contract": contract, "result_list": result_list, "keyword": keyword })
-    else:
-        return redirect('login_user')
-
-@login_required(login_url='/login_user/')
-def schedule(request):
-    if request.user.is_authenticated:
-        genba_list = Genba.objects.all().order_by('-date_created')
-        genbas_today = []
-        for genba in genba_list:
-            date = datetime.datetime(now.year, now.month, now.day)
-            start_date = datetime.datetime(genba.start_date.year, genba.start_date.month, genba.start_date.day)
-            end_date = datetime.datetime(genba.end_date.year, genba.end_date.month, genba.end_date.day)
-            if start_date <= date <= end_date:
-                genbas_today.append(genba)
-                if request.user.profile.contract_type == '下請け':
-                    for genba in genbas_today:
-                        if genba.head_person != request.user.profile or request.user.profile not in genba.attendees.all():
-                            genbas_today.remove(genba)
-    year = int(now.year)
-    month = int(now.month)
-    cal = calendar.HTMLCalendar().formatmonth(year, month)
-    cal = cal.replace('<td ', '<td width="150" height="150" hover')
-    cal = mark_safe(cal)
-    if request.user.is_authenticated:
-         context = {
-            "genba_list": genba_list,
-            "genbas_today":genbas_today,
-            "year": year,
-            "month": month,
-            "cal": cal,
-        }
-         return render(request, "schedule.html", context=context)
     else:
         return redirect('login_user')
 
