@@ -188,17 +188,18 @@ def genba_list(request):
 
         old_genba_list = Genba.objects.filter(Q(date_created__month__gte=start_month) & Q(date_created__month__lte=end_month)).order_by('-date_created')
 
+        result_list = []
+        keyword = ""
         if request.method == "POST":
             keyword = request.POST['keyword']
             result_list = Genba.objects.filter(name__contains=keyword).order_by('-date_created')
-            return render(request, "genba_search_list.html", {"result_list": result_list, "keyword": keyword})
         if request.user.profile.contract_type == '下請け':
             for genba in genba_list:
                 if genba.head_person == request.user.profile or request.user.profile in genba.attendees.all():
                     genbas.append(genba)
         else:
             genbas = genba_list
-    return render(request, "genba_list.html", {"genbas": genbas, "old_genba_list": old_genba_list, "start_month": start_month, "end_month": end_month})
+    return render(request, "genba_list.html", {"genbas": genbas, "old_genba_list": old_genba_list, "start_month": start_month, "end_month": end_month, "result_list": result_list, "keyword": keyword})
 
 @login_required(login_url='/login_user/')
 def profile_genba(request):   
