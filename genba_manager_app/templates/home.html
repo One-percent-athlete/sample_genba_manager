@@ -7,11 +7,11 @@
 <div class="p-4 sm:ml-64">
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div class="px-auto">
-            <h1 class="text-4xl pt-10 pb-5">連絡事項</h1>
+            <h1 class="text-4xl pt-10 pb-5">ホーム</h1>
         </div>
-        <form method="post" actio="{% url 'home' %}">
+        <h1 class="text-3xl py-5">連絡事項</h1>
+        <form method="post" action="{% url 'home' %}">
             {% csrf_token %}
-            <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">連絡事項</label>
             <input id="content" name="content" rows="4"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="連絡事項"></input>
@@ -24,7 +24,7 @@
             {% if notifications %}
             {% for n in notifications %}
             <li>
-                <p class="flex">{{n.content}} - {{ n.author.profile }}
+                <p class="flex mb-5 text-gray-500 mb-2">{{n.content}} - {{ n.author.profile }}
                     {% if request.user.profile.contract_type == '管理' %}
                     <a href="{% url 'delete_notification' n.id %}"><svg
                             class="w-6 h-6 dark:text-red-500 text-center ml-6" aria-hidden="true"
@@ -39,8 +39,12 @@
             {% endfor %}
             {% endif %}
         </ul>
+        <h1 class="text-3xl py-5">スケジュール</h1>
+        <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg">
+            {% include 'components/calendar.html' %}
+        </div>
         <div class="px-auto">
-            <h1 class="text-4xl py-10">本日および以降の作業現場
+            <h1 class="text-3xl py-10">本日および以降の作業現場
                 {% if request.user.profile.contract_type == '下請け' %}
                 {% else %}
                 <a class="pl-8" href="{% url 'add_genba' %}">＋</a>
