@@ -21,10 +21,10 @@
                 class="text-normal text-gray-700 uppercase bg-gray-50 whitespace-nowrap dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-6 py-3">
-                        ユーザー名
+                        名前
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        名前
+                        ユーザー名
                     </th>
                     <th scope="col" class="px-6 py-3">
                         雇用形態
@@ -46,12 +46,12 @@
                 {% if result_list %}
                 {% for profile in result_list %}
                 <tr class="border-b">
-                    <th scope="row" class="pl-6 pr-3 py-4 font-medium whitespace-nowrap text-gray-900">
-                        {{ profile.user }}
-                    </th>
                     <td class="px-6 py-4 whitespace-nowrap">
                         {{ profile.fullname }}
                     </td>
+                    <th scope="row" class="pl-6 pr-3 py-4 font-medium whitespace-nowrap text-gray-900">
+                        {{ profile.user }}
+                    </th>
                     <td class="px-6 py-4 whitespace-nowrap">
                         {{ profile.contract_type }}
                     </td>
