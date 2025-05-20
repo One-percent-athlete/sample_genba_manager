@@ -9,7 +9,7 @@
     <div class="relative overflow-x-auto shadow-md">
         <div class="px-auto">
             <h1 class="text-4xl py-10">検索結果</h1>
-            <h2 class="text-2xl m-0 mr-3">検索"{{ keyword }}",{{ result_list.count }}件の結果</h2>
+            <h2 class="text-2xl m-0 mr-3">検索キーワード"{{ keyword }}",{{ result_list.count }}件の結果</h2>
         </div>
         <table class="w-full text-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead
@@ -89,7 +89,7 @@
     <div class="relative overflow-x-auto shadow-md">
         <div class="px-auto">
             <h1 class="text-4xl py-10">検索結果</h1>
-            <h2 class="text-2xl m-0 mr-3">検索した作業員名前"{{ keyword }}",結果が見つかりませんでした。</h2>
+            <h2 class="text-2xl m-0 mr-3">検索したキーワード"{{ keyword }}",結果が見つかりませんでした。</h2>
         </div>
     </div>
     {% endif %}
