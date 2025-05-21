@@ -188,7 +188,7 @@ def genba_list(request):
                     genbas.append(genba)
         else:
             genbas = genba_list
-    return render(request, "genba_list.html", {"genbas": genbas, "old_genba_list": old_genba_list, "start_month": start_month, "end_month": end_month, "result_list": result_list, "keyword": keyword})
+    return render(request, "genba/genba_list.html", {"genbas": genbas, "old_genba_list": old_genba_list, "start_month": start_month, "end_month": end_month, "result_list": result_list, "keyword": keyword})
 
 @login_required(login_url='/login_user/')
 def genba_details(request, genba_id):
@@ -199,7 +199,7 @@ def genba_details(request, genba_id):
             form.save()
             messages.success(request, "現場を更新しました。")
             return redirect("genba_list")
-        return render(request, "genba_details.html", {"form": form , "genba": genba })
+        return render(request, "genba/genba_details.html", {"form": form , "genba": genba })
     else:
         messages.success(request, "ログインしてください。")
         return redirect("login_user")
@@ -217,7 +217,7 @@ def add_genba(request):
             messages.success(request, ("再度お試しください。"))
             return redirect("genba_list")
     else:
-        return render(request, "add_genba.html", {
+        return render(request, "genba/add_genba.html", {
             "form": form
         })
 
@@ -250,14 +250,14 @@ def report_list(request):
         if request.method == "POST":
             keyword = request.POST['keyword']
             result_list = DailyReport.objects.filter(date_created__contains=keyword).order_by('-date_created')
-            return render(request, "report_search_list.html", {"result_list": result_list, "keyword": keyword})
+            return render(request, "report/report_search_list.html", {"result_list": result_list, "keyword": keyword})
         if request.user.profile.contract_type == '下請け':
             for report in reports_list:
                 if report.genba.head_person == request.user.profile or request.user.profile in report.genba.attendees.all():
                     reports.append(report)
         else:
             reports = reports_list
-    return render(request, "report_list.html", { 'reports': reports, 'old_report_list': old_report_list, 'start_month': start_month, 'end_month': end_month })
+    return render(request, "report/report_list.html", { 'reports': reports, 'old_report_list': old_report_list, 'start_month': start_month, 'end_month': end_month })
 
 @login_required(login_url='/login_user/')
 def export_searched(request, keyword):
@@ -297,7 +297,7 @@ def add_report(request):
             messages.success(request, ("再度お試しください。"))
             return redirect("report_list")
     else:
-        return render(request, "add_report.html", {
+        return render(request, "report/add_report.html", {
             "form": form
         })
     
@@ -310,7 +310,7 @@ def report_details(request, report_id):
             form.save()
             messages.success(request, "作業日報を更新しました。")
             return redirect("report_list")
-        return render(request, "report_details.html", {"form": form , "report": report })
+        return render(request, "report/report_details.html", {"form": form , "report": report })
     else:
         messages.success(request, "ログインしてください。")
         return redirect("login_user")
