@@ -114,7 +114,7 @@ def register_user(request):
         return redirect("login_user")
 
 @login_required(login_url='/login_user/')
-def update_profile(request, profile_id):
+def profile_details(request, profile_id):
     if request.user.is_superuser:
         if request.user.is_authenticated:
             profile = Profile.objects.get(id=profile_id)
@@ -123,7 +123,7 @@ def update_profile(request, profile_id):
                 form.save()
                 messages.success(request, "プロフィールを更新しました。")
                 return redirect("profile_list")
-            return render(request, "update_profile.html", {"form": form , "profile": profile })
+            return render(request, "profile/profile_details.html", {"form": form , "profile": profile })
         else:
             messages.success(request, "ログインしてください。")
             return redirect("login_user")
@@ -152,9 +152,16 @@ def profile_list(request):
         if request.method == "POST":
             keyword = request.POST['keyword']
             result_list = Profile.objects.filter(fullname__contains=keyword).order_by('-date_created')
-        return render(request, "profile_list.html", { "profiles": profiles, "contract": contract, "result_list": result_list, "keyword": keyword })
+        return render(request, "profile/profile_list.html", { "profiles": profiles, "contract": contract, "result_list": result_list, "keyword": keyword })
     else:
         return redirect('login_user')
+
+@login_required(login_url='/login_user/')
+def profile_genba(request):   
+    if request.user.is_authenticated:
+        profiles = Profile.objects.all().order_by('user__id')
+        genbas = Genba.objects.all().order_by('-date_created')
+    return render(request, "profile/profile_genba.html", {"profiles": profiles, "genbas": genbas})
 
 @login_required(login_url='/login_user/')
 def genba_list(request):
@@ -182,13 +189,6 @@ def genba_list(request):
         else:
             genbas = genba_list
     return render(request, "genba_list.html", {"genbas": genbas, "old_genba_list": old_genba_list, "start_month": start_month, "end_month": end_month, "result_list": result_list, "keyword": keyword})
-
-@login_required(login_url='/login_user/')
-def profile_genba(request):   
-    if request.user.is_authenticated:
-        profiles = Profile.objects.all().order_by('user__id')
-        genbas = Genba.objects.all().order_by('-date_created')
-    return render(request, "profile_genba.html", {"profiles": profiles, "genbas": genbas})
 
 @login_required(login_url='/login_user/')
 def genba_details(request, genba_id):
