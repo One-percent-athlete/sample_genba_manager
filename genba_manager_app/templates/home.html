@@ -41,7 +41,7 @@
         </ul>
         {% if request.user.profile.contract_type != '下請け' %}
         <h1 class="text-3xl py-5">スケジュール</h1>
-        <div class="p-1 md:p-4 border-2 border-gray-200 border-dashed rounded-lg">
+        <div class="md:p-4 md:border-2 border-gray-200 border-dashed rounded-lg">
             {% include 'components/calendar.html' %}
         </div>
         {% endif %}
