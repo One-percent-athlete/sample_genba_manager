@@ -4,8 +4,8 @@
 {% endblock %}
 
 {% block content %}
-<div class="p-2 lg:p-4 sm:ml-64">
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<div class="sm:ml-64">
+    <div class="relative overflow-x-auto shadow-md p-1 lg:p-4 ">
         <div class="px-auto">
             <h1 class="text-4xl py-10">作業日報一覧<a class="pl-5" href="{% url 'add_report' %}">＋</a>
                 {% if request.user.profile.contract_type == "管理" %}
@@ -213,7 +213,7 @@
             {% endif %}
         </table>
     </div>
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="relative overflow-x-auto shadow-md p-1 lg:p-4">
         <div class="px-auto">
             <h1 class="text-4xl py-10">過去作業日報({{ start_month }}月~{{ end_month }}月)</h1>
             <h2 class="text-6xl m-0 mr-3"></h2>

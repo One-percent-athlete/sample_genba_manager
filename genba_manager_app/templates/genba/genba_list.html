@@ -4,9 +4,9 @@
 {% endblock %}
 
 {% block content %}
-<div class="p-2 lg:p-4 sm:ml-64">
+<div class="sm:ml-64">
     {% if result_list %}
-    <div class="relative overflow-x-auto shadow-md">
+    <div class="relative overflow-x-auto shadow-md p-1 lg:p-4">
         <div class="px-auto">
             <h1 class="text-4xl py-10">検索結果</h1>
             <h2 class="text-2xl m-0 mr-3">検索キーワード"{{ keyword }}",{{ result_list.count }}件の結果</h2>
@@ -86,14 +86,14 @@
     </div>
     {% elif keyword == "" %}
     {% else %}
-    <div class="relative overflow-x-auto shadow-md">
+    <div class="relative overflow-x-auto shadow-md p-1 lg:p-4">
         <div class="px-auto">
             <h1 class="text-4xl py-10">検索結果</h1>
             <h2 class="text-2xl m-0 mr-3">検索したキーワード"{{ keyword }}",結果が見つかりませんでした。</h2>
         </div>
     </div>
     {% endif %}
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="relative overflow-x-auto shadow-md p-1 lg:p-4">
         <div class="px-auto">
             <h1 class="text-4xl py-10">現場一覧
                 {% if request.user.profile.contract_type == "下請け" %}
@@ -197,7 +197,7 @@
             </tbody>
         </table>
     </div>
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="relative overflow-x-auto shadow-md p-1 lg:p-4">
         <div class="px-auto">
             <h1 class="text-4xl py-10">過去の現場({{ start_month }}月~{{end_month}}月)</h1>
         </div>
