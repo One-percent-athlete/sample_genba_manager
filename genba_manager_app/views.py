@@ -101,7 +101,7 @@ def register_user(request):
                 password = form.cleaned_data["password1"]
                 user = authenticate(username=username, password=password)
                 messages.success(request, ("プロフィールを入力してください。"))
-                return redirect("update_profile", user.pk)
+                return redirect("profile_details", user.pk)
             else:
                 messages.success(request, ("再度お試しください。"))
                 return redirect("register_user")

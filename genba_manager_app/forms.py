@@ -31,9 +31,9 @@ class UserProfileForm(forms.ModelForm):
        	('下請け', '下請け'),
         ('正社員', '正社員'),
         ('管理', '管理'),]
-	fullname = forms.CharField(label="お名前", max_length=100, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'お名前スペースなし'}))
-	phone = forms.CharField(label="電話番号", max_length=100, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'07012345678'}))
-	note = forms.CharField(label="備考", widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'注意事項'}))
+	fullname = forms.CharField(label="名前", max_length=100, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'例:山田太郎'}))
+	phone = forms.CharField(label="電話番号", max_length=100, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'例:07012345678'}))
+	note = forms.CharField(label="備考", widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'例:注意事項'}))
 	contract_type = forms.ChoiceField(label="雇用形態", choices=CHOICE, widget=forms.RadioSelect(attrs={'class': 'form-check-input'}))
 	is_active = forms.BooleanField(label="現役中", required=False)
 
@@ -55,11 +55,11 @@ class GenbaForm(forms.ModelForm):
     )
 	head_person = forms.Select(attrs={"class":"form-select mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300"})
 	attendees = forms.ModelMultipleChoiceField(label="同行者", queryset=Profile.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
-	name = forms.CharField(label="現場名", widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder': '現場名'}))
-	client = forms.CharField(label="取引先", widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder': '取引先'}))
-	address = forms.CharField(label="作業場所", widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder': '場所'}))
-	job_description = forms.CharField(label="作業内容",required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', "placeholder": "作業内容"}))
-	note = forms.CharField(label="連絡事項", required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', "placeholder": "連絡事項"}))
+	name = forms.CharField(label="現場名", widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder': '例:東京ビル'}))
+	client = forms.CharField(label="取引先", widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder': '例:株式会社ABC'}))
+	address = forms.CharField(label="作業場所", widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder': '例:東京都千代田区1-1-1'}))
+	job_description = forms.CharField(label="作業内容",required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', "placeholder": "例:足場組立"}))
+	note = forms.CharField(label="連絡事項", required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', "placeholder": "例:安全第一"}))
 	finished = forms.BooleanField(label="完了", required=False)
 	start_date = forms.DateField(label='作業開始日', widget=forms.DateInput(attrs={'type': 'date', 'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300'}))
 	end_date = forms.DateField(label='作業終了日', widget=forms.DateInput(attrs={'type': 'date', 'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300'}))
@@ -98,18 +98,18 @@ class DailyReportForm(forms.ModelForm):
 	workers = forms.ModelMultipleChoiceField(label="作業員", queryset=Profile.objects.all(), widget=forms.CheckboxSelectMultiple)
 	start_time = forms.TimeField(label="作業開始時間", widget=forms.TimeInput(attrs={'type': 'time', 'class': 'mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300'}))
 	end_time = forms.TimeField(label="作業終了時間", widget=forms.TimeInput(attrs={'type': 'time','class': 'mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300'}))
-	break_time = forms.CharField(label="休憩時間", max_length=10, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder': '休憩時間'}))
-	distance = forms.CharField(label="走行距離数", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'走行距離数'}))
-	highway_start = forms.CharField(label="高速道路インター（乗）", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'高速道路乗ったインター'}))
-	highway_end = forms.CharField(label="高速道路インター（降）", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'高速道路降りたインター'}))
+	break_time = forms.CharField(label="休憩時間", max_length=10, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder': '例:1.5'}))
+	distance = forms.CharField(label="走行距離数", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'例:100km'}))
+	highway_start = forms.CharField(label="高速道路（乗）", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'例:宮城インター'}))
+	highway_end = forms.CharField(label="高速道路（降）", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'例:仙台インター'}))
 	highway_payment = forms.ChoiceField(label="支払い方法", required=False, choices=PAYMENT_TYPES, widget=forms.RadioSelect(attrs={'class': 'form-check-input'}))
-	parking = forms.CharField(label="駐車料金", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'駐車料金'}))
-	hotel = forms.CharField(label="宿泊料金", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'宿泊料金'}))
-	other_payment = forms.CharField(label="その他お支払い", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'その他お支払い'}))
-	other_payment_amount = forms.CharField(label="その他お支払い金額", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'その他お支払い金額'}))
+	parking = forms.CharField(label="駐車料金", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'例:1000'}))
+	hotel = forms.CharField(label="宿泊料金", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'例:10000'}))
+	other_payment = forms.CharField(label="その他お支払い", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'例:釘代金'}))
+	other_payment_amount = forms.CharField(label="その他お支払い金額", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'例:5000'}))
 	paid_by = forms.Select(attrs={"class":"form-select mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300", "placeholder": "建替人"}),
-	daily_details = forms.CharField(label="作業内容", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300','placeholder':'作業内容'}))
-	daily_note = forms.CharField(label="連絡事項", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'連絡事項'}))
+	daily_details = forms.CharField(label="作業内容", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300','placeholder':'例:足場組立'}))
+	daily_note = forms.CharField(label="連絡事項", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'例:安全第一'}))
 
 	class Meta:
 		model = DailyReport
