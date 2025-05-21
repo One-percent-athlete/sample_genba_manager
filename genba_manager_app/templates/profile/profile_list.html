@@ -144,8 +144,8 @@
             <tbody>
                 {% for profile in profiles %}
                 {% if profile.is_active == True %}
-                <tr class="border-b">
-                    <td class="px-6 py-4 whitespace-nowrap">
+                <tr class="border-b whitespace-nowrap {% if request.user.profile == profile %} bg-blue-200 {% endif %}">
+                    <td class="px-6 py-4 ">
                         {{ profile.fullname }}
                     </td>
                     <th scope="row" class="pl-6 pr-3 py-4 font-medium whitespace-nowrap text-gray-900">
