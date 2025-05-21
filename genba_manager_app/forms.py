@@ -31,9 +31,9 @@ class UserProfileForm(forms.ModelForm):
        	('下請け', '下請け'),
         ('正社員', '正社員'),
         ('管理', '管理'),]
-	fullname = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control w-1/5 mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'お名前スペースなし'}))
-	phone = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control w-1/5 mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'携帯電話番号: 07012345678'}))
-	note = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control w-1/5 mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'注意事項'}))
+	fullname = forms.CharField(label="お名前", max_length=100, widget=forms.TextInput(attrs={'class':'form-control w-2/5 md:w-1/5 mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'お名前スペースなし'}))
+	phone = forms.CharField(label="電話番号", max_length=100, widget=forms.TextInput(attrs={'class':'form-control w-2/5 md:w-1/5 mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'07012345678'}))
+	note = forms.CharField(label="備考", widget=forms.TextInput(attrs={'class':'form-control w-2/5 md:w-1/5 mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'注意事項'}))
 	contract_type = forms.ChoiceField(label="雇用形態", choices=CHOICE, widget=forms.RadioSelect(attrs={'class': 'form-check-input'}))
 	is_active = forms.BooleanField(label="現役中", required=False)
 
