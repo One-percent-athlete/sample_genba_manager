@@ -7,7 +7,6 @@
 <div class="p-4 ml-4 md:ml-64">
     <div class="px-auto">
         <h1 class="text-4xl py-10">現場詳細</h1>
-        <h2 class="text-6xl m-0 mr-3"></h2>
     </div>
     <form class="space-y-6 pb-3" action="{% url 'genba_details' genba.id %}" method="post">
         {% csrf_token %}
