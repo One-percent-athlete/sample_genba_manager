@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from datetime import datetime
 from .models import Profile, Genba, DailyReport
 
 class SignUpForm(UserCreationForm):
@@ -54,7 +55,7 @@ class GenbaForm(forms.ModelForm):
         ('#c780e8', '桃色'),
     )
 	head_person = forms.Select(attrs={"class":"form-select mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300"})
-	attendees = forms.ModelMultipleChoiceField(label="同行者", queryset=Profile.objects.all(), required=False, widget=forms.CheckboxSelectMultiple)
+	attendees = forms.ModelMultipleChoiceField(label="同行者", queryset=Profile.objects.filter(is_active=True), required=False, widget=forms.CheckboxSelectMultiple)
 	name = forms.CharField(label="現場名", widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder': '例:東京ビル'}))
 	client = forms.CharField(label="取引先", widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder': '例:株式会社ABC'}))
 	address = forms.CharField(label="作業場所", widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder': '例:東京都千代田区1-1-1'}))
@@ -95,9 +96,9 @@ class DailyReportForm(forms.ModelForm):
 	working_date = forms.DateField(label='作業日', widget=forms.DateInput(attrs={'type': 'date', "class": "mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300"}))
 	select_types = forms.ChoiceField(label="請負・乗用", choices=SELECT_TYPES, widget=forms.RadioSelect(attrs={'class': 'form-check-input'}))
 	shift = forms.ChoiceField(label="昼夜シフト", choices=DAY_OR_NIGHT, widget=forms.RadioSelect(attrs={'class': 'form-check-input'}))
-	workers = forms.ModelMultipleChoiceField(label="作業員", queryset=Profile.objects.all(), widget=forms.CheckboxSelectMultiple)
-	start_time = forms.TimeField(label="作業開始時間", widget=forms.TimeInput(attrs={'type': 'time', 'class': 'mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder': '08:00'}))
-	end_time = forms.TimeField(label="作業終了時間", widget=forms.TimeInput(attrs={'type': 'time', 'class': 'mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder': '18:00'}))
+	workers = forms.ModelMultipleChoiceField(label="作業員", queryset=Profile.objects.filter(is_active=True), widget=forms.CheckboxSelectMultiple)
+	start_time = forms.TimeField(label="作業開始時間", widget=forms.TimeInput(attrs={'type': 'time', 'placeholder': 'HH:MM', 'step': '900', 'class': 'mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300'}))
+	end_time = forms.TimeField(label="作業終了時間", widget=forms.TimeInput(attrs={'type': 'time', 'placeholder': 'HH:MM', 'step': '900', 'class': 'mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300'}))
 	break_time = forms.CharField(label="休憩時間", max_length=10, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder': '例:1.5'}))
 	distance = forms.CharField(label="走行距離数", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'例:100km'}))
 	highway_start = forms.CharField(label="高速道路（乗）", max_length=100, required=False, widget=forms.TextInput(attrs={'class':'form-control mb-4 p-2 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300', 'placeholder':'例:宮城インター'}))

@@ -109,8 +109,8 @@ class DailyReport(models.Model):
     created_by = models.ForeignKey(Profile, related_name="created_by", on_delete=models.CASCADE, null=True, blank=True)
     working_date = models.DateField("作業日", blank=True, null=True)
     kentaikyo = models.BooleanField("建退共", default=False)
-    start_time = models.TimeField('作業開始時間')
-    end_time = models.TimeField('作業終了時間')
+    start_time = models.TimeField('作業開始時間', default='08:00')
+    end_time = models.TimeField('作業終了時間', default='17:00')
     break_time = models.CharField("休憩時間", max_length=10, blank=True)
 
     @property
