@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="sm:ml-64">
-    <div class="relative overflow-x-auto shadow-md p-1 lg:p-4 ">
+    <div class="relative overflow-x-auto shadow-md p-1 lg:p-4">
         <div class="px-auto">
             <h1 class="text-4xl py-10">作業日報一覧<a class="pl-5" href="{% url 'add_report' %}">＋</a>
                 {% if request.user.profile.contract_type == "管理" %}
